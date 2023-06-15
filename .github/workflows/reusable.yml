@@ -4,23 +4,23 @@ on:
   workflow_call:
     inputs:
       who-to-greet:
-        description: 'Who to greet'
-        required: true
-        default: 'world'
+        description: 'The person to greet'
         type: string
+        required: true
+        default: World
     outputs:
       current-time:
         description: 'The time when greeting.'
         value: ${{ jobs.reusable-job.outputs.current-time }}
-        
+
 jobs:
-  reusable_job:
+  reusable-job:
     runs-on: ubuntu-latest
     outputs:
       current-time: ${{ steps.time.outputs.time }}
-    name: My test action
     steps:
-      - run: echo "Hello ${{ inputs.who-to-greet }}"
+      - name: Greet someone
+        run: echo "Hello ${{ inputs.who-to-greet }}"
       - name: Set time
         id: time
-        run: echo "time=$(date)" >> $GITHUB_OUTPUT        
+        run: echo "time=$(date)" >> $GITHUB_OUTPUT
